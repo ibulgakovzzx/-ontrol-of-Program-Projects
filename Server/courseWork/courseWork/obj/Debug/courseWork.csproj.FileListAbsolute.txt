@@ -1,0 +1,12 @@
+D:\Study\Six_sem\CPP\Repos\Client\courseWork\courseWork\bin\Debug\courseWork.exe.config
+D:\Study\Six_sem\CPP\Repos\Client\courseWork\courseWork\obj\Debug\courseWork.csprojResolveAssemblyReference.cache
+D:\Study\Six_sem\CPP\Repos\Client\courseWork\courseWork\bin\Debug\courseWork.exe
+D:\Study\Six_sem\CPP\Repos\Client\courseWork\courseWork\bin\Debug\courseWork.pdb
+D:\Study\Six_sem\CPP\Repos\Client\courseWork\courseWork\obj\Debug\courseWork.exe
+D:\Study\Six_sem\CPP\Repos\Client\courseWork\courseWork\obj\Debug\courseWork.pdb
+D:\Study\Six_sem\CPP\Repos\Server\courseWork\courseWork\bin\Debug\courseWork.exe.config
+D:\Study\Six_sem\CPP\Repos\Server\courseWork\courseWork\bin\Debug\courseWork.exe
+D:\Study\Six_sem\CPP\Repos\Server\courseWork\courseWork\bin\Debug\courseWork.pdb
+D:\Study\Six_sem\CPP\Repos\Server\courseWork\courseWork\obj\Debug\courseWork.exe
+D:\Study\Six_sem\CPP\Repos\Server\courseWork\courseWork\obj\Debug\courseWork.pdb
+D:\Study\Six_sem\CPP\Repos\Server\courseWork\courseWork\obj\Debug\courseWork.csprojResolveAssemblyReference.cache
