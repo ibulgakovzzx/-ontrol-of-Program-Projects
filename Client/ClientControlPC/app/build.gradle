@@ -38,7 +38,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
 
     Map<String, String> android = rootProject.ext.android
     compile(
@@ -47,5 +46,33 @@ dependencies {
             android.appcompat,
             android.recyclerView,
     )
+
+    Map<String, String> google = rootProject.ext.google
+    compile(
+            google.maps,
+            google.location,
+    )
+
+    Map<String, String> rx = rootProject.ext.rx
+    compile(
+            rx.java,
+            rx.android,
+    )
+
+    Map<String, String> anko = rootProject.ext.anko
+    compile(
+            anko.sdk15,
+            anko.support,
+            anko.appcompat,
+    )
+
+    Map<String, String> network = rootProject.ext.network
+    compile(
+            network.retrofit,
+            network.converterGson,
+            network.okhttpLogging
+    )
+
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    testCompile 'junit:junit:4.12'
 }

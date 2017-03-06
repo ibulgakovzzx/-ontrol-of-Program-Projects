@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">ClientControlPC</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="main_screen.status.in_work">Вы на рабочем месте</string>
+    <string name="main_screen.status.out_work">Вы не на рабочем месте</string>
+    <string name="main_screen.status.need_set_job_place">Необходимо задать местоположение рабочего места в настройках</string>
+    <string name="main_screen.update">Обновить</string>
+    <string name="main_screen.menu.settings">Настройки</string>
+
+    <string name="settings.job_location">Изменить местоположение рабочего места</string>
+    <string name="settings.distance">Расстояние, м</string>
+    <string name="settings.save">Сохранить</string>
 </resources>

@@ -89,6 +89,7 @@ ext {
             analytics: "com.google.android.gms:play-services-analytics:${versions.playServices}",
             maps     : "com.google.android.gms:play-services-maps:${versions.playServices}",
             fcm      : "com.google.firebase:firebase-messaging:${versions.firebase}",
+            location : "com.google.android.gms:play-services-location:${versions.playServices}"
     ]
 
     social = [
