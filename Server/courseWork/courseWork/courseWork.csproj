@@ -44,8 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Log.cs" />
+    <Compile Include="Otdel.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RZP.cs" />
+    <Compile Include="ShtatRaspis.cs" />
+    <Compile Include="Sotrudnik.cs" />
+    <Compile Include="URV.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

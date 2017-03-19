@@ -11,4 +11,5 @@
     <string name="settings.job_location">Изменить местоположение рабочего места</string>
     <string name="settings.distance">Расстояние, м</string>
     <string name="settings.save">Сохранить</string>
+    <string name="lable_send_command">Отправить команду</string>
 </resources>

@@ -11,68 +11,60 @@ namespace courseWork
 {
     class Program
     {
-        static int port = 10000;
-        // Адрес
-        static IPAddress ipAddress = IPAddress.Parse("2.0.3.2");
-        // Оправить сообщение
-        const byte codeMsg = 1;
-        // Повернуть экран
-        const byte codeRotate = 2;
-        // Выключить компьютер
-        const byte codePoff = 3;
+        static int PORT = 9998;
+        static IPAddress ipAddress = IPAddress.Parse("0.0.0.0");
+
+        const byte codeNewUser = 49;
+        const byte codeChangePosition = 50;
+        const byte codeGetStatistick = 51;
+
         static void Main(string[] args)
         {
-            IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
+            /*IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            IPAddress ipAddress = ipHostInfo.AddressList[0];*/
             Console.WriteLine($"Ip addres: {ipAddress.ToString()}");
-            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, port);
-            // Создаем основной сокет
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, PORT);
+            TcpListener listener = new TcpListener(ipAddress, PORT);
             try
             {
+                listener.Start();
                 String msg;
-                // Связываем сокет с конечной точкой
-                socket.Bind(ipEndPoint);
-                // Переходим в режим "прослушивания"
-                socket.Listen(1);
                 while (true)
                 {
-                    // Ждем соединение. При удачном соединение создается новый экземпляр Socket
-                    Socket handler = socket.Accept();
-                    // Массив, где сохраняем принятые данные.
+                    TcpClient client = listener.AcceptTcpClient();
+                    NetworkStream stream = client.GetStream();
                     byte[] recBytes = new byte[1024];
-                    int nBytes = handler.Receive(recBytes);
-                    switch (recBytes[0])    // Определяемся с командами клиента
+                    stream.Read(recBytes, 0, 1024);
+                    switch (recBytes[0])
                     {
-                        case codeMsg:   // Сообщение                         
-                            nBytes = handler.Receive(recBytes); // Читаем данные сообщения
-                            if (nBytes != 0)
-                            {
-                                // Преобразуем полученный набор байт в строку
-                                msg = Encoding.UTF8.GetString(recBytes, 0, nBytes);
-                                MessageBox.Show(msg, "Тест!");
-                            }
+                        case codeNewUser:
+                            msg = Convert.ToString(recBytes);
+                            MessageBox.Show(msg, "Добавлен новый пользователь!");
+                            Console.WriteLine("Added new user");
                             break;
-                        case codeRotate: // Поворот экрана
-                            msg = Encoding.UTF8.GetString(recBytes, 0, nBytes);
-                            MessageBox.Show(msg, "Повернули экран!");
+                        case codeChangePosition:
+                            msg = Convert.ToString(recBytes);
+                            MessageBox.Show(msg, "Изменилось положение для пользователя!");
+                            Console.WriteLine("Chabge position from user");
                             break;
-                        case codePoff: // Выключаем
-                            System.Diagnostics.Process p = new System.Diagnostics.Process();
-                            p.StartInfo.FileName = "shutdown.exe";
-                            p.StartInfo.Arguments = "-s -t 00";
-                            p.Start();
-                            socket.Close();
+                        case codeGetStatistick:
+                            //TODO: getStatisctic from db
+                            byte[] data = Encoding.UTF8.GetBytes("Message");
+                            NetworkStream writeStream = client.GetStream();
+                            writeStream.Write(data,0,data.Length);
+                            Console.WriteLine("Send statistic to user");
                             break;
                     }
-                    // Освобождаем сокеты
-                    handler.Shutdown(SocketShutdown.Both);
-                    handler.Close();
                 }
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message, "Ошибка сервера");
+                Console.ReadKey();
             }
         }
+
     }
 }
+
+
