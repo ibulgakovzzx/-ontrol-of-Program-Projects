@@ -6,6 +6,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.OleDb;
+using System.Data;
 
 namespace courseWork
 {
@@ -13,6 +15,11 @@ namespace courseWork
     {
         static int PORT = 9998;
         static IPAddress ipAddress = IPAddress.Parse("0.0.0.0");
+        static SQLDB sqlDB = new SQLDB();
+        static List<Sotrudnik> worker = new List<Sotrudnik>();
+        static URV urv = new URV();
+        static DataTable ds;
+        static Position pos;
 
         const byte codeNewUser = 49;
         const byte codeChangePosition = 50;
@@ -20,8 +27,9 @@ namespace courseWork
 
         static void Main(string[] args)
         {
-            /*IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            IPAddress ipAddress = ipHostInfo.AddressList[0];*/
+            sqlDB.cSQL_init("Provider = Microsoft.Ace.OLEDB.12.0; " + @"Data Source= ../../../worker_time.accdb; Persist Security Info=False;");
+            sqlDB.Connect();
+            pos = new Position();
             Console.WriteLine($"Ip addres: {ipAddress.ToString()}");
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, PORT);
             TcpListener listener = new TcpListener(ipAddress, PORT);
@@ -29,6 +37,7 @@ namespace courseWork
             {
                 listener.Start();
                 String msg;
+                String query;
                 while (true)
                 {
                     TcpClient client = listener.AcceptTcpClient();
@@ -40,11 +49,22 @@ namespace courseWork
                         case codeNewUser:
                             msg = Convert.ToString(recBytes);
                             MessageBox.Show(msg, "Добавлен новый пользователь!");
+                            //TODO set name and firstname
+                            String name = "Petr1";
+                            String firstName = "Ivanov1";
+                            query = $"INSERT INTO Worker(Name,Firstname) VALUES('{name}','{firstName}')";
+                            ds = sqlDB.Query(query);
                             Console.WriteLine("Added new user");
                             break;
                         case codeChangePosition:
                             msg = Convert.ToString(recBytes);
                             MessageBox.Show(msg, "Изменилось положение для пользователя!");
+                            //TODO set parametrs
+                            int workerID = 1;
+                            DateTime Date = DateTime.Now;
+                            pos.inWork = true;
+                            query = $"INSERT INTO WorkTime(WorkerID,Data,Position) VALUES({workerID},'{Date.ToString().Replace('.', '-')}',{pos.inWork})";
+                            ds = sqlDB.Query(query);
                             Console.WriteLine("Chabge position from user");
                             break;
                         case codeGetStatistick:
@@ -63,6 +83,7 @@ namespace courseWork
                 Console.ReadKey();
             }
         }
+
 
     }
 }

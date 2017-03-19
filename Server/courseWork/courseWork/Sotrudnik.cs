@@ -11,5 +11,6 @@ namespace courseWork
         public string FIO { get; set; }
         public int ID { get; set; }
         public Otdel otdel { get; set; }
+        public Position inWork { get; set; }
     }
 }

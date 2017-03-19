@@ -52,6 +52,7 @@
     <Compile Include="RZP.cs" />
     <Compile Include="ShtatRaspis.cs" />
     <Compile Include="Sotrudnik.cs" />
+    <Compile Include="sqlDB.cs" />
     <Compile Include="URV.cs" />
   </ItemGroup>
   <ItemGroup>
