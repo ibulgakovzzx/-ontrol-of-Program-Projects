@@ -16,6 +16,7 @@ import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
 
+
     String serIpAddress;       // адрес сервера
     int port = 10000;           // порт
     String msg;                 // Сообщение

@@ -1,9 +1,9 @@
 package com.ibulgakov.clientcontrolpc.ui.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.support.design.widget.TextInputEditText
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -11,28 +11,26 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.Tasks.await
 import com.ibulgakov.clientcontrolpc.MainApp
 import com.ibulgakov.clientcontrolpc.R
 import com.ibulgakov.clientcontrolpc.ui.base.BaseActivity
 import com.ibulgakov.clientcontrolpc.ui.settings.SettingsActivity
 import com.ibulgakov.clientcontrolpc.utils.TimeTrackerUtils
-import org.jetbrains.anko.async
 import org.jetbrains.anko.find
 import org.jetbrains.anko.onClick
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
-import java.io.BufferedWriter
 import java.io.DataOutputStream
-import java.io.OutputStreamWriter
-import java.io.PrintWriter
 import java.net.InetAddress
 import java.net.Socket
-import java.util.*
-import kotlin.concurrent.thread
 
 
 class MainScreenActivity: BaseActivity() {
+
+    companion object {
+        fun getIntent(context: Context): Intent =
+                Intent(context, MainScreenActivity::class.java)
+    }
 
     private lateinit var tvStatus: TextView
     private lateinit var btnUpdate: Button

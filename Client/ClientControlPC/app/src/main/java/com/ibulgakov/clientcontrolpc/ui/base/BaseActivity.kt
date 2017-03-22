@@ -14,6 +14,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.ibulgakov.clientcontrolpc.Consts
 import com.ibulgakov.clientcontrolpc.MainApp
+import com.ibulgakov.clientcontrolpc.utils.LoginController
 import com.ibulgakov.clientcontrolpc.utils.Prefs
 import java.util.concurrent.TimeUnit
 
@@ -91,7 +92,9 @@ open class BaseActivity: AppCompatActivity(), GoogleApiClient.ConnectionCallback
 
     override fun onLocationChanged(location: Location) {
         Log.d(TAG, "current location: " + location.toString())
-        MainApp.globalBus.send(location)
-        Prefs.save(Consts.Prefs.KEY_MY_LAST_POSITION, location)
+        if (LoginController.isLoggedIn) {
+            MainApp.globalBus.send(location)
+            Prefs.save(Consts.Prefs.KEY_MY_LAST_POSITION, location)
+        }
     }
 }

@@ -12,4 +12,7 @@
     <string name="settings.distance">Расстояние, м</string>
     <string name="settings.save">Сохранить</string>
     <string name="lable_send_command">Отправить команду</string>
+    <string name="worker.name">Имя сотрудника</string>
+    <string name="login.action.send">Отправить</string>
+    <string name="login.title">Авторизация</string>
 </resources>

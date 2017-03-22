@@ -25,7 +25,8 @@
         >
 
         <activity
-            android:name=".ui.main.MainScreenActivity">
+            android:name=".ui.login.LoginActivity"
+            android:label="@string/login.title">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -34,6 +35,9 @@
             </intent-filter>
 
         </activity>
+
+        <activity
+            android:name=".ui.main.MainScreenActivity"/>
 
 
         <activity
