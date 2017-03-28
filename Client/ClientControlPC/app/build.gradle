@@ -73,6 +73,11 @@ dependencies {
             network.okhttpLogging
     )
 
+    Map<String, String> helpers = rootProject.ext.helpers
+    compile(
+            helpers.threetenabp,
+    )
+
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     testCompile 'junit:junit:4.12'
 }

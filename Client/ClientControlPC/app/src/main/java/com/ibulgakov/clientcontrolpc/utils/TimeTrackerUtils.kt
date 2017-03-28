@@ -9,15 +9,14 @@ object TimeTrackerUtils {
 
     private val TAG = TimeTrackerUtils::class.java.simpleName
 
-    fun hasSettingJobPlace(): Boolean =
-            Prefs.load(Consts.Prefs.KEY_JOB_LOCATION, LatLng::class.java) != null
+
 
     fun isInWork(): Boolean {
         val jobLatLng = Prefs.load(Consts.Prefs.KEY_JOB_LOCATION, LatLng::class.java)
         val jobDistance = Prefs.get().getInt(Consts.Prefs.KEY_JOB_DISTANCE, 0)
         val myLocation = Prefs.load(Consts.Prefs.KEY_MY_LAST_POSITION, Location::class.java)
         //Log.d(TAG, "isInWork:: jobLatLng = $jobLatLng  myLocation = $myLocation  jobDistance = $jobDistance")
-        Logger.print("isInWork:: jobLatLng = $jobLatLng  myLocation = $myLocation  jobDistance = $jobDistance")
+        //Logger.print("isInWork:: jobLatLng = $jobLatLng  myLocation = $myLocation  jobDistance = $jobDistance")
         if (jobLatLng != null && myLocation != null) {
             return calculateIsInWork(jobLatLng, myLocation, jobDistance)
         } else {
@@ -25,7 +24,7 @@ object TimeTrackerUtils {
         }
     }
 
-    private fun calculateIsInWork(jobLatLng: LatLng, myPosition: Location, distance: Int): Boolean {
+    fun calculateIsInWork(jobLatLng: LatLng, myPosition: Location, distance: Int): Boolean {
         val jobLocation = Location("")
         with(jobLocation) {
             longitude = jobLatLng.longitude

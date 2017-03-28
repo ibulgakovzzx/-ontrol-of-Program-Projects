@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -13,6 +14,8 @@ import android.widget.Toast
 import com.google.android.gms.maps.model.LatLng
 import com.ibulgakov.clientcontrolpc.MainApp
 import com.ibulgakov.clientcontrolpc.R
+import com.ibulgakov.clientcontrolpc.tests.TestMainScreenActivity
+import com.ibulgakov.clientcontrolpc.tests.TestTimeTrackerUtils
 import com.ibulgakov.clientcontrolpc.ui.base.BaseActivity
 import com.ibulgakov.clientcontrolpc.ui.settings.SettingsActivity
 import com.ibulgakov.clientcontrolpc.utils.TimeTrackerUtils
@@ -25,11 +28,13 @@ import java.net.InetAddress
 import java.net.Socket
 
 
-class MainScreenActivity: BaseActivity() {
+class MainScreenActivity : BaseActivity() {
 
     companion object {
         fun getIntent(context: Context): Intent =
                 Intent(context, MainScreenActivity::class.java)
+
+        private val TAG = MainScreenActivity::class.java.simpleName
     }
 
     private lateinit var tvStatus: TextView
@@ -37,8 +42,8 @@ class MainScreenActivity: BaseActivity() {
     private lateinit var btnSendCommand: Button
     private lateinit var commandText: EditText
 
-    internal var serIpAddress: String = "192.168.0.102" // Server address
-    internal var port = 10000           // Port
+    internal var serIpAddress: String = "10.46.48.5" // Server address
+    internal var port = 9998           // Port
     internal var codeCommand: Byte = 0
 
     internal var codeNewUser: Byte = 1
@@ -56,15 +61,17 @@ class MainScreenActivity: BaseActivity() {
         btnSendCommand = find(R.id.btnSendCommand)
         commandText = find(R.id.command)
 
+        TestTimeTrackerUtils()
+        TestMainScreenActivity()
 
-        tvStatus.text = getStatusText()
+        tvStatus.text = getStatusText(TimeTrackerUtils.isInWork())
         MainApp.globalBus.observeEvents(LatLng::class.java)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { tvStatus.text = getStatusText() }
+                .subscribe { tvStatus.text = getStatusText(TimeTrackerUtils.isInWork()) }
 
         btnUpdate.onClick {
-            tvStatus.text = getStatusText()
+            tvStatus.text = getStatusText(TimeTrackerUtils.isInWork())
         }
 
         btnSendCommand.onClick {
@@ -75,16 +82,14 @@ class MainScreenActivity: BaseActivity() {
         }
     }
 
-    private fun getStatusText(): String =
-            if (TimeTrackerUtils.hasSettingJobPlace()) {
-                if (TimeTrackerUtils.isInWork()) {
-                    getString(R.string.main_screen_status_in_work)
-                } else {
-                    getString(R.string.main_screen_status_out_work)
-                }
+    fun getStatusText(isInWork: Boolean?): String =
+            if (isInWork!!) {
+                //getString(R.string.main_screen_status_in_work)
+                "Вы на рабочем месте"
             } else {
-                getString(R.string.main_screen_status_need_set_job_place)
+                "Вы не на рабочем месте"
             }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_screen_menu, menu)
@@ -103,10 +108,18 @@ class MainScreenActivity: BaseActivity() {
 
 
     internal inner class SenderThread : AsyncTask<Void, Void, Void>() {
+
         override fun doInBackground(vararg params: Void): Void? {
             try {
+                Log.d(TAG, "connecting")
                 val ipAddress = InetAddress.getByName(serIpAddress)
                 val socket = Socket(ipAddress, port)
+                if (socket.isBound) {
+                    Log.d(TAG, "connected")
+                } else {
+                    Log.d(TAG, "disconnected")
+                }
+
                 val outputStream = socket.getOutputStream()
                 val out = DataOutputStream(outputStream)
                 when (codeCommand) {
