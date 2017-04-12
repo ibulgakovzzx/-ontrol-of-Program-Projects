@@ -2,7 +2,7 @@ package com.ibulgakov.clientcontrolpc.utils
 
 object LoginController {
 
-    private val LOGIN = "LOGIN"
+    val LOGIN = "LOGIN"
     private val IS_LOGGED_IN = "IS_LOGGED_IN"
 
     val isLoggedIn: Boolean
@@ -16,4 +16,10 @@ object LoginController {
 
     }
 
+
+    fun logout()  {
+        Prefs.edit()
+                .putBoolean(IS_LOGGED_IN, false)
+                .apply()
+    }
 }

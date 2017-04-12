@@ -60,6 +60,5 @@ class SettingsMapsActivity : BaseActivity(), OnMapReadyCallback, GoogleMap.OnMap
         jobLocation = point
         updateJobMarker()
         toast("Местоположение рабочего места задано!")
-        //map!!.moveCamera(CameraUpdateFactory.newLatLng(point))
     }
 }
